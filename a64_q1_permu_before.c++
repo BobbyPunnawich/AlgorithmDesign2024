@@ -34,7 +34,7 @@ int main() {
     cin >> n >> m;
     for (int i=0; i<m; i++) {
         cin >> a >> b;
-        order[b] = ;
+        order[b] = a;
     }
     permutation(n,m,order,sol,used,0);
 }
