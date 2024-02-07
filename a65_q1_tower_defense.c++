@@ -1,39 +1,50 @@
 #include <iostream>
 #include <vector>
+#include <map>
+#include <algorithm>
+#include <string>
 
 using namespace std;
 
-
-int minMonsterPower(vector<int> &monsterPositions,vector<int> &monsterHealths,vector<int> &towerPositions,int monsterNumber,int towerNumber,int towerRange) {
-    int sum = 0;
-    for (int j = 0; j < towerNumber; j++) {
-        for (int i = 0; i < monsterNumber; i++) {
-            if (monsterPositions[i] >= towerPositions[j]-towerRange && monsterPositions[i] <= towerPositions[j]+towerRange && monsterHealths[i] >= 1) {
-                monsterHealths[i]--;
+void healthSum(int spaceNumber, int monsterNumber, int turretNumber, int turretRange, vector<int> &monsterPositions, vector<int> &monsterHealth, vector<int> &turretPositions)
+{
+    for (int j = 0; j < turretNumber; j++)
+    {
+        for (int i = 0; i < monsterNumber; i++)
+        {
+            if (abs(monsterPositions[i] - turretPositions[j]) <= turretRange)
+            {
+                monsterHealth[i]--;
                 break;
             }
         }
     }
-    for (int i = 0; i < monsterNumber; i++) {
-        sum+=monsterHealths[i];
+    int healthSum = 0;
+    for (int i = 0; i < monsterNumber; i++)
+    {
+        healthSum += monsterHealth[i];
     }
-    return sum;
+    cout << healthSum;
 }
 
-int main() {
-    int positionNumber,monsterNumber,towerNumber,towerRange,mock;
-    cin >> positionNumber >> monsterNumber >> towerNumber >> towerRange;
+int main()
+{
+    int spaceNumber, monsterNumber, turretNumber, turretRange;
+    cin >> spaceNumber >> monsterNumber >> turretNumber >> turretRange;
     vector<int> monsterPositions(monsterNumber);
-    vector<int> monsterHealths(monsterNumber);
-    vector<int> towerPositions(towerNumber);
-    for (int i=0; i<monsterNumber; i++) {
+    vector<int> monsterHealth(monsterNumber);
+    vector<int> turretPositions(turretNumber);
+    for (int i = 0; i < monsterNumber; i++)
+    {
         cin >> monsterPositions[i];
     }
-    for (int i=0; i<monsterNumber; i++) {
-        cin >> monsterHealths[i];
+    for (int i = 0; i < monsterNumber; i++)
+    {
+        cin >> monsterHealth[i];
     }
-    for (int i=0; i<towerNumber; i++) {
-        cin >> towerPositions[i];
+    for (int i = 0; i < turretNumber; i++)
+    {
+        cin >> turretPositions[i];
     }
-    cout << minMonsterPower(monsterPositions,monsterHealths,towerPositions,monsterNumber,towerNumber,towerRange);
+    healthSum(spaceNumber, monsterNumber, turretNumber, turretRange, monsterPositions, monsterHealth, turretPositions);
 }

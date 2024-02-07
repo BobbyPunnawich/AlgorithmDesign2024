@@ -1,40 +1,51 @@
 #include <iostream>
+#include <string>
 #include <vector>
 #include <map>
 
 using namespace std;
 
-void permutation(int n, int m, map<int, int> &order, vector<int> &sol, vector<bool> &used, int len) {
-    if (len < n) {
-        for (int i=0;i<n;i++) {
-            if (used[i] == false) {
-                if (order.find(i) == order.end() || used[order[i]] == true) {
+void permConstraint(int n, int m, vector<int> &sol, int len, vector<bool> &used, map<int, int> &order)
+{
+    if (len < n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if (order.find(i) == order.end() || used[order[i]])
+            {
+                if (!used[i])
+                {
                     used[i] = true;
                     sol[len] = i;
-                    permutation(n, m, order, sol, used, len+1);
+                    permConstraint(n, m, sol, len + 1, used, order);
                     used[i] = false;
-                }  
+                }
             }
         }
-    } else {
-        for (int i=0; i<len; i++) {
+    }
+    else
+    {
+        for (int i = 0; i < n; i++)
+        {
             cout << sol[i] << " ";
         }
-        cout << "\n";
+        cout << '\n';
     }
 }
 
-int main() {
+int main()
+{
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int n,m,a,b;
-    map<int,int> order;
+    int n, m, a, b;
+    cin >> n >> m;
+    map<int, int> order;
     vector<int> sol(n);
     vector<bool> used(n, false);
-    cin >> n >> m;
-    for (int i=0; i<m; i++) {
+    for (int i = 0; i < m; i++)
+    {
         cin >> a >> b;
         order[b] = a;
     }
-    permutation(n,m,order,sol,used,0);
+    permConstraint(n, m, sol, 0, used, order);
 }

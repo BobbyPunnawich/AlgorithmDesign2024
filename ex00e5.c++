@@ -3,36 +3,48 @@
 
 using namespace std;
 
-void consecutiveOnes(int n,int k,vector<string>&sol,int len) {
-    int testK = 0;
-    if (len<n) {
-        sol[len]= "0";
-        consecutiveOnes(n,k,sol,len+1);
-        sol[len]= "1";
-        consecutiveOnes(n,k,sol,len+1);
+void consecutiveOnes(int n, int k, vector<string> &sol, int len, int countZero)
+{
+    if (len < n)
+    {
+        if (countZero < n - k)
+        {
+            sol[len] = "0";
+            consecutiveOnes(n, k, sol, len + 1, countZero + 1);
+        }
+        sol[len] = "1";
+        consecutiveOnes(n, k, sol, len + 1, countZero);
     }
-    else {
-        for (int i=0;i<n;i++) {
-            if (sol[i] == "1") {
-                testK++;
+    else
+    {
+        int consecutiveOnes = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (sol[i] == "1")
+            {
+                consecutiveOnes++;
             }
-            else {
-                testK = 0;
+            else
+            {
+                consecutiveOnes = 0;
             }
-            if (testK>=k) {
-                for (int i=0;i<n;i++) {
-                cout << sol[i];
+            if (consecutiveOnes == k)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    cout << sol[j];
+                }
+                cout << "\n";
+                break;
             }
-            cout << "\n";
-            break;
-        }    
         }
     }
 }
 
-int main() {
-    int n,k;
+int main()
+{
+    int n, k;
     cin >> n >> k;
     vector<string> sol(n);
-    consecutiveOnes(n,k,sol,0);
+    consecutiveOnes(n, k, sol, 0, 0);
 }

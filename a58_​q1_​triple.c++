@@ -1,24 +1,29 @@
 #include <iostream>
-#include <cmath>
 #include <vector>
 #include <string>
-#include <map>
-#include <algorithm>
 
 using namespace std;
 
 string triple_sum(vector<int> &A, int N, int q)
 {
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < N - 2; i++)
     {
-        for (int j = i + 1; j < N; j++)
+        int left = i + 1;
+        int right = N - 1;
+        while (left < right)
         {
-            for (int k = j + 1; k < N; k++)
+            int sum = A[i] + A[left] + A[right];
+            if (sum == q)
             {
-                if (A[i] + A[j] + A[k] == q)
-                {
-                    return "YES";
-                }
+                return "YES";
+            }
+            else if (sum < q)
+            {
+                left++;
+            }
+            else
+            {
+                right--;
             }
         }
     }
